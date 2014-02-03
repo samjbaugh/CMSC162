@@ -1,4 +1,4 @@
-module Main where
+module BoggleBoard where
 
 import Data.Map
 import Data.List
@@ -16,6 +16,11 @@ This program is a Boggle Board generator written in Haskell. It simulates "shaki
 -Sam Baugh
 
 -}
+
+bound :: BoggleBoard -> Integer
+bound board
+    | (1,5) `member` board = 5
+    | (1,4) `member` board = 4
 
 --takerm stands for "take and remove", it randomly selects an item from a list, removes it from the list, and returns both in a tuple.
 takerm :: Eq a => [a] -> RandState (a,[a])
@@ -133,14 +138,13 @@ instance Show BoggleBoardImpl where
         else "     1   2   3   4   5  \n" ++ "1  [ " ++ (printRow board 1) ++ " ]  \n"++ "2  [ " ++ (printRow board 2) ++ " ]  \n"++ "3  [ " ++ (printRow board 3) ++ " ]  \n"++ "4  [ " ++ (printRow board 4) ++ " ]  \n" ++ "5  [ " ++ (printRow board 5) ++ " ]  \n" 
 
 --This is a simple IO that asks the user which type of Boggle Board they would like to generate. The program then prints a generated board and terminates.
-main :: IO ()
-main = do
+sample :: IO ()
+sample = do
     g <- getStdGen
     putStr "\n \n \n This is a Boggle board generator. Would you like to generate a 4x4 or a 5x5 Boggle board? \n (Enger either '4' or '5'.) \n"
     a <- getLine
     if a=="4" then putStr $ "\n \n \n" ++ (show $ Construct $ quickBoard4 g) else if a=="5" then putStr $ "\n \n \n" ++ (show $ Construct $ quickBoard5 g) else putStr "Invalid Input."
     putStr "\n \n \n Thank you."
-
 
 
 
