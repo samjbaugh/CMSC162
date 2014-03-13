@@ -1,0 +1,14 @@
+Command File:
+D	T	F
+Up	0	3
+N/A	5	8
+Down	17	6
+Down	20	3
+Up	22	5
+N/A	25	8
+N/A	25	9
+Down	25	6
+Up	28	7
+N/A	30	8
+N/A	35	9
+Down	37	6
