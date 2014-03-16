@@ -12,26 +12,6 @@ import InfoSets
 pid :: Player -> Int
 pid player = lookBy2 playerIDs (==player)
 
-deal :: Int -> [Player] -> Deck -> ([(Player,Hand)],Deck)
-deal handsize players deck = (final,finaldeck) where
-
-    playerT :: [(Player,[Card])]
-    playerT = map (flip (,) []) players
-
-    appList :: [Hand]
-    (appList,finaldeck) = deal' handsize (length players) deck
-
-    jay :: [[(Player,Hand)] -> [(Player,Hand)]] 
-    jay = map (zipWith (\hand -> \(player,handL) -> (player,hand:handL))) appList
-
-    final :: [(Player,Hand)]
-    final = apply jay playerT
-
-    deal' :: Int -> Int -> Deck -> ([Hand],Deck)
-    deal' 0 _ result = ([],result)
-    deal' handsize numplayers mydeck = (toAdd:one,two)
-        where (toAdd,toKeep) = takeX numplayers mydeck
-              (one,two) = deal' (handsize-1) numplayers toKeep
 
 insertHand :: Player -> Hand -> [(Player,Hand)] -> [(Player,Hand)]
 insertHand currentPlayer insertHand handList = insertBy (\(x,_) -> \(y,_) -> compare (pid x) (pid y)) (currentPlayer,insertHand) handList
