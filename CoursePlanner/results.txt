@@ -1,0 +1,6 @@
+here
+Group name: Introductory Sequence four courses required  
+ Table-info: (CMSC 15100)
+CMSC: 10100 : Introduction to Programming for the World Wide Web 
+    Terms: Winter
+    prerequisite(s): or 13100 or CMSC: 10500 and 10600 

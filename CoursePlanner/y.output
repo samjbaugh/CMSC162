@@ -1,0 +1,1656 @@
+Nonterminals useless in grammar
+
+   words
+   coursem
+
+
+Rules useless in grammar
+
+   55 words: /* empty */
+   56      | WORD words
+
+   57 coursem: /* empty */
+   58        | course coursem
+
+
+Rules useless in parser due to conflicts
+
+   14 prereq_set: /* empty */
+
+
+State 0 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 3 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 4 conflicts: 21 shift/reduce
+State 19 conflicts: 21 reduce/reduce
+State 31 conflicts: 2 shift/reduce, 21 reduce/reduce
+State 42 conflicts: 21 reduce/reduce
+State 43 conflicts: 4 shift/reduce
+State 46 conflicts: 1 shift/reduce, 21 reduce/reduce
+State 53 conflicts: 4 shift/reduce
+State 54 conflicts: 21 shift/reduce
+State 55 conflicts: 1 shift/reduce
+State 59 conflicts: 2 shift/reduce, 21 reduce/reduce
+State 61 conflicts: 1 shift/reduce
+State 62 conflicts: 2 shift/reduce
+State 69 conflicts: 2 shift/reduce
+State 72 conflicts: 21 reduce/reduce
+State 77 conflicts: 21 reduce/reduce
+State 78 conflicts: 21 reduce/reduce
+State 80 conflicts: 2 shift/reduce
+State 81 conflicts: 21 reduce/reduce
+State 82 conflicts: 21 reduce/reduce
+
+
+Grammar
+
+    0 $accept: commands $end
+
+    1 commands: /* empty */
+    2         | command commands
+
+    3 command: trashm
+    4        | PAGE_END
+    5        | trashm bigstart_set
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set trashm prereq_set trashm BIG_END
+
+    7 term_set: TERMS seasons
+
+    8 seasons: season
+    9        | season seasons
+
+   10 season: SUMMER
+   11       | WINTER
+   12       | AUTUMN
+   13       | SPRING
+
+   14 prereq_set: /* empty */
+   15           | PREREQ prereq_courses
+   16           | PREREQ
+
+   17 start_set: START course trashm course_stuff trashm UNITS END
+   18          | START trashm END
+
+   19 course_stuff: WORD
+   20             | WORD course_stuff
+
+   21 course: COURSE_NUMBER
+   22       | COURSE_LABEL COURSE_NUMBER
+   23       | COURSE_LABEL SEMICOLON COURSE_NUMBER
+
+   24 prereq_courses: course conjphrasem trashm BREAK
+   25               | course conjunction trashm BREAK
+   26               | course trashm BREAK
+
+   27 conjphrasem: conjphrase
+   28            | conjphrase conjphrasem
+
+   29 conjphrase: conjunction trashm course
+
+   30 conjunction: OR
+   31            | AND
+
+   32 trashm: /* empty */
+   33       | trashm trash
+
+   34 trash: DASH
+   35      | EQUALS
+   36      | COURSE_LABEL
+   37      | COURSE_NUMBER
+   38      | SEMICOLON
+   39      | PREREQ
+   40      | TERMS
+   41      | UNITS
+   42      | START
+   43      | END
+   44      | PERIOD
+   45      | BREAK
+   46      | BIG_START
+   47      | BIG_END
+   48      | AND
+   49      | OR
+   50      | WORD
+   51      | AUTUMN
+   52      | WINTER
+   53      | SPRING
+   54      | SUMMER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+PREREQ (258) 15 16 39
+TERMS (259) 7 40
+COURSE_LABEL (260) 22 23 36
+UNITS (261) 17 41
+START (262) 17 18 42
+END (263) 17 18 43
+COURSE_NUMBER (264) 21 22 23 37
+EQUALS (265) 35
+DASH (266) 34
+SEMICOLON (267) 23 38
+PERIOD (268) 44
+BREAK (269) 24 25 26 45
+BIG_START (270) 6 46
+BIG_END (271) 6 47
+AND (272) 31 48
+OR (273) 30 49
+WORD (274) 19 20 50
+AUTUMN (275) 12 51
+WINTER (276) 11 52
+SUMMER (277) 10 54
+SPRING (278) 13 53
+PAGE_END (279) 4
+
+
+Nonterminals, with rules where they appear
+
+$accept (25)
+    on left: 0
+commands (26)
+    on left: 1 2, on right: 0 2
+command (27)
+    on left: 3 4 5, on right: 2
+bigstart_set (28)
+    on left: 6, on right: 5
+term_set (29)
+    on left: 7, on right: 6
+seasons (30)
+    on left: 8 9, on right: 7 9
+season (31)
+    on left: 10 11 12 13, on right: 8 9
+prereq_set (32)
+    on left: 14 15 16, on right: 6
+start_set (33)
+    on left: 17 18, on right: 6
+course_stuff (34)
+    on left: 19 20, on right: 17 20
+course (35)
+    on left: 21 22 23, on right: 17 24 25 26 29
+prereq_courses (36)
+    on left: 24 25 26, on right: 15
+conjphrasem (37)
+    on left: 27 28, on right: 24 28
+conjphrase (38)
+    on left: 29, on right: 27 28
+conjunction (39)
+    on left: 30 31, on right: 25 29
+trashm (40)
+    on left: 32 33, on right: 3 5 6 17 18 24 25 26 29 33
+trash (41)
+    on left: 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51
+    52 53 54, on right: 33
+
+
+State 0
+
+    0 $accept: . commands $end
+
+    PAGE_END  shift, and go to state 1
+
+    $end      reduce using rule 1 (commands)
+    $end      [reduce using rule 32 (trashm)]
+    PAGE_END  [reduce using rule 32 (trashm)]
+    $default  reduce using rule 32 (trashm)
+
+    commands  go to state 2
+    command   go to state 3
+    trashm    go to state 4
+
+
+State 1
+
+    4 command: PAGE_END .
+
+    $default  reduce using rule 4 (command)
+
+
+State 2
+
+    0 $accept: commands . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    2 commands: command . commands
+
+    PAGE_END  shift, and go to state 1
+
+    $end      reduce using rule 1 (commands)
+    $end      [reduce using rule 32 (trashm)]
+    PAGE_END  [reduce using rule 32 (trashm)]
+    $default  reduce using rule 32 (trashm)
+
+    commands  go to state 6
+    command   go to state 3
+    trashm    go to state 4
+
+
+State 4
+
+    3 command: trashm .
+    5        | trashm . bigstart_set
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 19
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    PREREQ         [reduce using rule 3 (command)]
+    TERMS          [reduce using rule 3 (command)]
+    COURSE_LABEL   [reduce using rule 3 (command)]
+    UNITS          [reduce using rule 3 (command)]
+    START          [reduce using rule 3 (command)]
+    END            [reduce using rule 3 (command)]
+    COURSE_NUMBER  [reduce using rule 3 (command)]
+    EQUALS         [reduce using rule 3 (command)]
+    DASH           [reduce using rule 3 (command)]
+    SEMICOLON      [reduce using rule 3 (command)]
+    PERIOD         [reduce using rule 3 (command)]
+    BREAK          [reduce using rule 3 (command)]
+    BIG_START      [reduce using rule 3 (command)]
+    BIG_END        [reduce using rule 3 (command)]
+    AND            [reduce using rule 3 (command)]
+    OR             [reduce using rule 3 (command)]
+    WORD           [reduce using rule 3 (command)]
+    AUTUMN         [reduce using rule 3 (command)]
+    WINTER         [reduce using rule 3 (command)]
+    SUMMER         [reduce using rule 3 (command)]
+    SPRING         [reduce using rule 3 (command)]
+    $default       reduce using rule 3 (command)
+
+    bigstart_set  go to state 28
+    trash         go to state 29
+
+
+State 5
+
+    0 $accept: commands $end .
+
+    $default  accept
+
+
+State 6
+
+    2 commands: command commands .
+
+    $default  reduce using rule 2 (commands)
+
+
+State 7
+
+   39 trash: PREREQ .
+
+    $default  reduce using rule 39 (trash)
+
+
+State 8
+
+   40 trash: TERMS .
+
+    $default  reduce using rule 40 (trash)
+
+
+State 9
+
+   36 trash: COURSE_LABEL .
+
+    $default  reduce using rule 36 (trash)
+
+
+State 10
+
+   41 trash: UNITS .
+
+    $default  reduce using rule 41 (trash)
+
+
+State 11
+
+   42 trash: START .
+
+    $default  reduce using rule 42 (trash)
+
+
+State 12
+
+   43 trash: END .
+
+    $default  reduce using rule 43 (trash)
+
+
+State 13
+
+   37 trash: COURSE_NUMBER .
+
+    $default  reduce using rule 37 (trash)
+
+
+State 14
+
+   35 trash: EQUALS .
+
+    $default  reduce using rule 35 (trash)
+
+
+State 15
+
+   34 trash: DASH .
+
+    $default  reduce using rule 34 (trash)
+
+
+State 16
+
+   38 trash: SEMICOLON .
+
+    $default  reduce using rule 38 (trash)
+
+
+State 17
+
+   44 trash: PERIOD .
+
+    $default  reduce using rule 44 (trash)
+
+
+State 18
+
+   45 trash: BREAK .
+
+    $default  reduce using rule 45 (trash)
+
+
+State 19
+
+    6 bigstart_set: BIG_START . trashm start_set trashm term_set trashm prereq_set trashm BIG_END
+   46 trash: BIG_START .
+
+    $end           reduce using rule 46 (trash)
+    PREREQ         reduce using rule 32 (trashm)
+    PREREQ         [reduce using rule 46 (trash)]
+    TERMS          reduce using rule 32 (trashm)
+    TERMS          [reduce using rule 46 (trash)]
+    COURSE_LABEL   reduce using rule 32 (trashm)
+    COURSE_LABEL   [reduce using rule 46 (trash)]
+    UNITS          reduce using rule 32 (trashm)
+    UNITS          [reduce using rule 46 (trash)]
+    START          reduce using rule 32 (trashm)
+    START          [reduce using rule 46 (trash)]
+    END            reduce using rule 32 (trashm)
+    END            [reduce using rule 46 (trash)]
+    COURSE_NUMBER  reduce using rule 32 (trashm)
+    COURSE_NUMBER  [reduce using rule 46 (trash)]
+    EQUALS         reduce using rule 32 (trashm)
+    EQUALS         [reduce using rule 46 (trash)]
+    DASH           reduce using rule 32 (trashm)
+    DASH           [reduce using rule 46 (trash)]
+    SEMICOLON      reduce using rule 32 (trashm)
+    SEMICOLON      [reduce using rule 46 (trash)]
+    PERIOD         reduce using rule 32 (trashm)
+    PERIOD         [reduce using rule 46 (trash)]
+    BREAK          reduce using rule 32 (trashm)
+    BREAK          [reduce using rule 46 (trash)]
+    BIG_START      reduce using rule 32 (trashm)
+    BIG_START      [reduce using rule 46 (trash)]
+    BIG_END        reduce using rule 32 (trashm)
+    BIG_END        [reduce using rule 46 (trash)]
+    AND            reduce using rule 32 (trashm)
+    AND            [reduce using rule 46 (trash)]
+    OR             reduce using rule 32 (trashm)
+    OR             [reduce using rule 46 (trash)]
+    WORD           reduce using rule 32 (trashm)
+    WORD           [reduce using rule 46 (trash)]
+    AUTUMN         reduce using rule 32 (trashm)
+    AUTUMN         [reduce using rule 46 (trash)]
+    WINTER         reduce using rule 32 (trashm)
+    WINTER         [reduce using rule 46 (trash)]
+    SUMMER         reduce using rule 32 (trashm)
+    SUMMER         [reduce using rule 46 (trash)]
+    SPRING         reduce using rule 32 (trashm)
+    SPRING         [reduce using rule 46 (trash)]
+    PAGE_END       reduce using rule 46 (trash)
+    $default       reduce using rule 32 (trashm)
+
+    trashm  go to state 30
+
+
+State 20
+
+   47 trash: BIG_END .
+
+    $default  reduce using rule 47 (trash)
+
+
+State 21
+
+   48 trash: AND .
+
+    $default  reduce using rule 48 (trash)
+
+
+State 22
+
+   49 trash: OR .
+
+    $default  reduce using rule 49 (trash)
+
+
+State 23
+
+   50 trash: WORD .
+
+    $default  reduce using rule 50 (trash)
+
+
+State 24
+
+   51 trash: AUTUMN .
+
+    $default  reduce using rule 51 (trash)
+
+
+State 25
+
+   52 trash: WINTER .
+
+    $default  reduce using rule 52 (trash)
+
+
+State 26
+
+   54 trash: SUMMER .
+
+    $default  reduce using rule 54 (trash)
+
+
+State 27
+
+   53 trash: SPRING .
+
+    $default  reduce using rule 53 (trash)
+
+
+State 28
+
+    5 command: trashm bigstart_set .
+
+    $default  reduce using rule 5 (command)
+
+
+State 29
+
+   33 trashm: trashm trash .
+
+    $default  reduce using rule 33 (trashm)
+
+
+State 30
+
+    6 bigstart_set: BIG_START trashm . start_set trashm term_set trashm prereq_set trashm BIG_END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 31
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    start_set  go to state 33
+    trash      go to state 29
+
+
+State 31
+
+   17 start_set: START . course trashm course_stuff trashm UNITS END
+   18          | START . trashm END
+   42 trash: START .
+
+    COURSE_LABEL   shift, and go to state 34
+    COURSE_NUMBER  shift, and go to state 35
+
+    PREREQ         reduce using rule 32 (trashm)
+    PREREQ         [reduce using rule 42 (trash)]
+    TERMS          reduce using rule 32 (trashm)
+    TERMS          [reduce using rule 42 (trash)]
+    COURSE_LABEL   [reduce using rule 32 (trashm)]
+    COURSE_LABEL   [reduce using rule 42 (trash)]
+    UNITS          reduce using rule 32 (trashm)
+    UNITS          [reduce using rule 42 (trash)]
+    START          reduce using rule 32 (trashm)
+    START          [reduce using rule 42 (trash)]
+    END            reduce using rule 32 (trashm)
+    END            [reduce using rule 42 (trash)]
+    COURSE_NUMBER  [reduce using rule 32 (trashm)]
+    COURSE_NUMBER  [reduce using rule 42 (trash)]
+    EQUALS         reduce using rule 32 (trashm)
+    EQUALS         [reduce using rule 42 (trash)]
+    DASH           reduce using rule 32 (trashm)
+    DASH           [reduce using rule 42 (trash)]
+    SEMICOLON      reduce using rule 32 (trashm)
+    SEMICOLON      [reduce using rule 42 (trash)]
+    PERIOD         reduce using rule 32 (trashm)
+    PERIOD         [reduce using rule 42 (trash)]
+    BREAK          reduce using rule 32 (trashm)
+    BREAK          [reduce using rule 42 (trash)]
+    BIG_START      reduce using rule 32 (trashm)
+    BIG_START      [reduce using rule 42 (trash)]
+    BIG_END        reduce using rule 32 (trashm)
+    BIG_END        [reduce using rule 42 (trash)]
+    AND            reduce using rule 32 (trashm)
+    AND            [reduce using rule 42 (trash)]
+    OR             reduce using rule 32 (trashm)
+    OR             [reduce using rule 42 (trash)]
+    WORD           reduce using rule 32 (trashm)
+    WORD           [reduce using rule 42 (trash)]
+    AUTUMN         reduce using rule 32 (trashm)
+    AUTUMN         [reduce using rule 42 (trash)]
+    WINTER         reduce using rule 32 (trashm)
+    WINTER         [reduce using rule 42 (trash)]
+    SUMMER         reduce using rule 32 (trashm)
+    SUMMER         [reduce using rule 42 (trash)]
+    SPRING         reduce using rule 32 (trashm)
+    SPRING         [reduce using rule 42 (trash)]
+    $default       reduce using rule 32 (trashm)
+
+    course  go to state 36
+    trashm  go to state 37
+
+
+State 32
+
+   46 trash: BIG_START .
+
+    $default  reduce using rule 46 (trash)
+
+
+State 33
+
+    6 bigstart_set: BIG_START trashm start_set . trashm term_set trashm prereq_set trashm BIG_END
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 38
+
+
+State 34
+
+   22 course: COURSE_LABEL . COURSE_NUMBER
+   23       | COURSE_LABEL . SEMICOLON COURSE_NUMBER
+
+    COURSE_NUMBER  shift, and go to state 39
+    SEMICOLON      shift, and go to state 40
+
+
+State 35
+
+   21 course: COURSE_NUMBER .
+
+    $default  reduce using rule 21 (course)
+
+
+State 36
+
+   17 start_set: START course . trashm course_stuff trashm UNITS END
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 41
+
+
+State 37
+
+   18 start_set: START trashm . END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 42
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    trash  go to state 29
+
+
+State 38
+
+    6 bigstart_set: BIG_START trashm start_set trashm . term_set trashm prereq_set trashm BIG_END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 43
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    term_set  go to state 44
+    trash     go to state 29
+
+
+State 39
+
+   22 course: COURSE_LABEL COURSE_NUMBER .
+
+    $default  reduce using rule 22 (course)
+
+
+State 40
+
+   23 course: COURSE_LABEL SEMICOLON . COURSE_NUMBER
+
+    COURSE_NUMBER  shift, and go to state 45
+
+
+State 41
+
+   17 start_set: START course trashm . course_stuff trashm UNITS END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 46
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    course_stuff  go to state 47
+    trash         go to state 29
+
+
+State 42
+
+   18 start_set: START trashm END .
+   43 trash: END .
+
+    PREREQ         reduce using rule 18 (start_set)
+    PREREQ         [reduce using rule 43 (trash)]
+    TERMS          reduce using rule 18 (start_set)
+    TERMS          [reduce using rule 43 (trash)]
+    COURSE_LABEL   reduce using rule 18 (start_set)
+    COURSE_LABEL   [reduce using rule 43 (trash)]
+    UNITS          reduce using rule 18 (start_set)
+    UNITS          [reduce using rule 43 (trash)]
+    START          reduce using rule 18 (start_set)
+    START          [reduce using rule 43 (trash)]
+    END            reduce using rule 18 (start_set)
+    END            [reduce using rule 43 (trash)]
+    COURSE_NUMBER  reduce using rule 18 (start_set)
+    COURSE_NUMBER  [reduce using rule 43 (trash)]
+    EQUALS         reduce using rule 18 (start_set)
+    EQUALS         [reduce using rule 43 (trash)]
+    DASH           reduce using rule 18 (start_set)
+    DASH           [reduce using rule 43 (trash)]
+    SEMICOLON      reduce using rule 18 (start_set)
+    SEMICOLON      [reduce using rule 43 (trash)]
+    PERIOD         reduce using rule 18 (start_set)
+    PERIOD         [reduce using rule 43 (trash)]
+    BREAK          reduce using rule 18 (start_set)
+    BREAK          [reduce using rule 43 (trash)]
+    BIG_START      reduce using rule 18 (start_set)
+    BIG_START      [reduce using rule 43 (trash)]
+    BIG_END        reduce using rule 18 (start_set)
+    BIG_END        [reduce using rule 43 (trash)]
+    AND            reduce using rule 18 (start_set)
+    AND            [reduce using rule 43 (trash)]
+    OR             reduce using rule 18 (start_set)
+    OR             [reduce using rule 43 (trash)]
+    WORD           reduce using rule 18 (start_set)
+    WORD           [reduce using rule 43 (trash)]
+    AUTUMN         reduce using rule 18 (start_set)
+    AUTUMN         [reduce using rule 43 (trash)]
+    WINTER         reduce using rule 18 (start_set)
+    WINTER         [reduce using rule 43 (trash)]
+    SUMMER         reduce using rule 18 (start_set)
+    SUMMER         [reduce using rule 43 (trash)]
+    SPRING         reduce using rule 18 (start_set)
+    SPRING         [reduce using rule 43 (trash)]
+    $default       reduce using rule 18 (start_set)
+
+
+State 43
+
+    7 term_set: TERMS . seasons
+   40 trash: TERMS .
+
+    AUTUMN  shift, and go to state 48
+    WINTER  shift, and go to state 49
+    SUMMER  shift, and go to state 50
+    SPRING  shift, and go to state 51
+
+    AUTUMN    [reduce using rule 40 (trash)]
+    WINTER    [reduce using rule 40 (trash)]
+    SUMMER    [reduce using rule 40 (trash)]
+    SPRING    [reduce using rule 40 (trash)]
+    $default  reduce using rule 40 (trash)
+
+    seasons  go to state 52
+    season   go to state 53
+
+
+State 44
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set . trashm prereq_set trashm BIG_END
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 54
+
+
+State 45
+
+   23 course: COURSE_LABEL SEMICOLON COURSE_NUMBER .
+
+    $default  reduce using rule 23 (course)
+
+
+State 46
+
+   19 course_stuff: WORD .
+   20             | WORD . course_stuff
+   50 trash: WORD .
+
+    WORD  shift, and go to state 55
+
+    PREREQ         reduce using rule 19 (course_stuff)
+    PREREQ         [reduce using rule 50 (trash)]
+    TERMS          reduce using rule 19 (course_stuff)
+    TERMS          [reduce using rule 50 (trash)]
+    COURSE_LABEL   reduce using rule 19 (course_stuff)
+    COURSE_LABEL   [reduce using rule 50 (trash)]
+    UNITS          reduce using rule 19 (course_stuff)
+    UNITS          [reduce using rule 50 (trash)]
+    START          reduce using rule 19 (course_stuff)
+    START          [reduce using rule 50 (trash)]
+    END            reduce using rule 19 (course_stuff)
+    END            [reduce using rule 50 (trash)]
+    COURSE_NUMBER  reduce using rule 19 (course_stuff)
+    COURSE_NUMBER  [reduce using rule 50 (trash)]
+    EQUALS         reduce using rule 19 (course_stuff)
+    EQUALS         [reduce using rule 50 (trash)]
+    DASH           reduce using rule 19 (course_stuff)
+    DASH           [reduce using rule 50 (trash)]
+    SEMICOLON      reduce using rule 19 (course_stuff)
+    SEMICOLON      [reduce using rule 50 (trash)]
+    PERIOD         reduce using rule 19 (course_stuff)
+    PERIOD         [reduce using rule 50 (trash)]
+    BREAK          reduce using rule 19 (course_stuff)
+    BREAK          [reduce using rule 50 (trash)]
+    BIG_START      reduce using rule 19 (course_stuff)
+    BIG_START      [reduce using rule 50 (trash)]
+    BIG_END        reduce using rule 19 (course_stuff)
+    BIG_END        [reduce using rule 50 (trash)]
+    AND            reduce using rule 19 (course_stuff)
+    AND            [reduce using rule 50 (trash)]
+    OR             reduce using rule 19 (course_stuff)
+    OR             [reduce using rule 50 (trash)]
+    WORD           [reduce using rule 19 (course_stuff)]
+    WORD           [reduce using rule 50 (trash)]
+    AUTUMN         reduce using rule 19 (course_stuff)
+    AUTUMN         [reduce using rule 50 (trash)]
+    WINTER         reduce using rule 19 (course_stuff)
+    WINTER         [reduce using rule 50 (trash)]
+    SUMMER         reduce using rule 19 (course_stuff)
+    SUMMER         [reduce using rule 50 (trash)]
+    SPRING         reduce using rule 19 (course_stuff)
+    SPRING         [reduce using rule 50 (trash)]
+    $default       reduce using rule 19 (course_stuff)
+
+    course_stuff  go to state 56
+
+
+State 47
+
+   17 start_set: START course trashm course_stuff . trashm UNITS END
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 57
+
+
+State 48
+
+   12 season: AUTUMN .
+
+    $default  reduce using rule 12 (season)
+
+
+State 49
+
+   11 season: WINTER .
+
+    $default  reduce using rule 11 (season)
+
+
+State 50
+
+   10 season: SUMMER .
+
+    $default  reduce using rule 10 (season)
+
+
+State 51
+
+   13 season: SPRING .
+
+    $default  reduce using rule 13 (season)
+
+
+State 52
+
+    7 term_set: TERMS seasons .
+
+    $default  reduce using rule 7 (term_set)
+
+
+State 53
+
+    8 seasons: season .
+    9        | season . seasons
+
+    AUTUMN  shift, and go to state 48
+    WINTER  shift, and go to state 49
+    SUMMER  shift, and go to state 50
+    SPRING  shift, and go to state 51
+
+    AUTUMN    [reduce using rule 8 (seasons)]
+    WINTER    [reduce using rule 8 (seasons)]
+    SUMMER    [reduce using rule 8 (seasons)]
+    SPRING    [reduce using rule 8 (seasons)]
+    $default  reduce using rule 8 (seasons)
+
+    seasons  go to state 58
+    season   go to state 53
+
+
+State 54
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set trashm . prereq_set trashm BIG_END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 59
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    PREREQ         [reduce using rule 14 (prereq_set)]
+    TERMS          [reduce using rule 14 (prereq_set)]
+    COURSE_LABEL   [reduce using rule 14 (prereq_set)]
+    UNITS          [reduce using rule 14 (prereq_set)]
+    START          [reduce using rule 14 (prereq_set)]
+    END            [reduce using rule 14 (prereq_set)]
+    COURSE_NUMBER  [reduce using rule 14 (prereq_set)]
+    EQUALS         [reduce using rule 14 (prereq_set)]
+    DASH           [reduce using rule 14 (prereq_set)]
+    SEMICOLON      [reduce using rule 14 (prereq_set)]
+    PERIOD         [reduce using rule 14 (prereq_set)]
+    BREAK          [reduce using rule 14 (prereq_set)]
+    BIG_START      [reduce using rule 14 (prereq_set)]
+    BIG_END        [reduce using rule 14 (prereq_set)]
+    AND            [reduce using rule 14 (prereq_set)]
+    OR             [reduce using rule 14 (prereq_set)]
+    WORD           [reduce using rule 14 (prereq_set)]
+    AUTUMN         [reduce using rule 14 (prereq_set)]
+    WINTER         [reduce using rule 14 (prereq_set)]
+    SUMMER         [reduce using rule 14 (prereq_set)]
+    SPRING         [reduce using rule 14 (prereq_set)]
+
+    prereq_set  go to state 60
+    trash       go to state 29
+
+
+State 55
+
+   19 course_stuff: WORD .
+   20             | WORD . course_stuff
+
+    WORD  shift, and go to state 55
+
+    WORD      [reduce using rule 19 (course_stuff)]
+    $default  reduce using rule 19 (course_stuff)
+
+    course_stuff  go to state 56
+
+
+State 56
+
+   20 course_stuff: WORD course_stuff .
+
+    $default  reduce using rule 20 (course_stuff)
+
+
+State 57
+
+   17 start_set: START course trashm course_stuff trashm . UNITS END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 61
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    trash  go to state 29
+
+
+State 58
+
+    9 seasons: season seasons .
+
+    $default  reduce using rule 9 (seasons)
+
+
+State 59
+
+   15 prereq_set: PREREQ . prereq_courses
+   16           | PREREQ .
+   39 trash: PREREQ .
+
+    COURSE_LABEL   shift, and go to state 34
+    COURSE_NUMBER  shift, and go to state 35
+
+    PREREQ         reduce using rule 16 (prereq_set)
+    PREREQ         [reduce using rule 39 (trash)]
+    TERMS          reduce using rule 16 (prereq_set)
+    TERMS          [reduce using rule 39 (trash)]
+    COURSE_LABEL   [reduce using rule 16 (prereq_set)]
+    COURSE_LABEL   [reduce using rule 39 (trash)]
+    UNITS          reduce using rule 16 (prereq_set)
+    UNITS          [reduce using rule 39 (trash)]
+    START          reduce using rule 16 (prereq_set)
+    START          [reduce using rule 39 (trash)]
+    END            reduce using rule 16 (prereq_set)
+    END            [reduce using rule 39 (trash)]
+    COURSE_NUMBER  [reduce using rule 16 (prereq_set)]
+    COURSE_NUMBER  [reduce using rule 39 (trash)]
+    EQUALS         reduce using rule 16 (prereq_set)
+    EQUALS         [reduce using rule 39 (trash)]
+    DASH           reduce using rule 16 (prereq_set)
+    DASH           [reduce using rule 39 (trash)]
+    SEMICOLON      reduce using rule 16 (prereq_set)
+    SEMICOLON      [reduce using rule 39 (trash)]
+    PERIOD         reduce using rule 16 (prereq_set)
+    PERIOD         [reduce using rule 39 (trash)]
+    BREAK          reduce using rule 16 (prereq_set)
+    BREAK          [reduce using rule 39 (trash)]
+    BIG_START      reduce using rule 16 (prereq_set)
+    BIG_START      [reduce using rule 39 (trash)]
+    BIG_END        reduce using rule 16 (prereq_set)
+    BIG_END        [reduce using rule 39 (trash)]
+    AND            reduce using rule 16 (prereq_set)
+    AND            [reduce using rule 39 (trash)]
+    OR             reduce using rule 16 (prereq_set)
+    OR             [reduce using rule 39 (trash)]
+    WORD           reduce using rule 16 (prereq_set)
+    WORD           [reduce using rule 39 (trash)]
+    AUTUMN         reduce using rule 16 (prereq_set)
+    AUTUMN         [reduce using rule 39 (trash)]
+    WINTER         reduce using rule 16 (prereq_set)
+    WINTER         [reduce using rule 39 (trash)]
+    SUMMER         reduce using rule 16 (prereq_set)
+    SUMMER         [reduce using rule 39 (trash)]
+    SPRING         reduce using rule 16 (prereq_set)
+    SPRING         [reduce using rule 39 (trash)]
+    $default       reduce using rule 16 (prereq_set)
+
+    course          go to state 62
+    prereq_courses  go to state 63
+
+
+State 60
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set trashm prereq_set . trashm BIG_END
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 64
+
+
+State 61
+
+   17 start_set: START course trashm course_stuff trashm UNITS . END
+   41 trash: UNITS .
+
+    END  shift, and go to state 65
+
+    END       [reduce using rule 41 (trash)]
+    $default  reduce using rule 41 (trash)
+
+
+State 62
+
+   24 prereq_courses: course . conjphrasem trashm BREAK
+   25               | course . conjunction trashm BREAK
+   26               | course . trashm BREAK
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    AND       [reduce using rule 32 (trashm)]
+    OR        [reduce using rule 32 (trashm)]
+    $default  reduce using rule 32 (trashm)
+
+    conjphrasem  go to state 68
+    conjphrase   go to state 69
+    conjunction  go to state 70
+    trashm       go to state 71
+
+
+State 63
+
+   15 prereq_set: PREREQ prereq_courses .
+
+    $default  reduce using rule 15 (prereq_set)
+
+
+State 64
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set trashm prereq_set trashm . BIG_END
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 72
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    trash  go to state 29
+
+
+State 65
+
+   17 start_set: START course trashm course_stuff trashm UNITS END .
+
+    $default  reduce using rule 17 (start_set)
+
+
+State 66
+
+   31 conjunction: AND .
+
+    $default  reduce using rule 31 (conjunction)
+
+
+State 67
+
+   30 conjunction: OR .
+
+    $default  reduce using rule 30 (conjunction)
+
+
+State 68
+
+   24 prereq_courses: course conjphrasem . trashm BREAK
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 73
+
+
+State 69
+
+   27 conjphrasem: conjphrase .
+   28            | conjphrase . conjphrasem
+
+    AND  shift, and go to state 66
+    OR   shift, and go to state 67
+
+    AND       [reduce using rule 27 (conjphrasem)]
+    OR        [reduce using rule 27 (conjphrasem)]
+    $default  reduce using rule 27 (conjphrasem)
+
+    conjphrasem  go to state 74
+    conjphrase   go to state 69
+    conjunction  go to state 75
+
+
+State 70
+
+   25 prereq_courses: course conjunction . trashm BREAK
+   29 conjphrase: conjunction . trashm course
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 76
+
+
+State 71
+
+   26 prereq_courses: course trashm . BREAK
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 77
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    trash  go to state 29
+
+
+State 72
+
+    6 bigstart_set: BIG_START trashm start_set trashm term_set trashm prereq_set trashm BIG_END .
+   47 trash: BIG_END .
+
+    PREREQ         reduce using rule 6 (bigstart_set)
+    PREREQ         [reduce using rule 47 (trash)]
+    TERMS          reduce using rule 6 (bigstart_set)
+    TERMS          [reduce using rule 47 (trash)]
+    COURSE_LABEL   reduce using rule 6 (bigstart_set)
+    COURSE_LABEL   [reduce using rule 47 (trash)]
+    UNITS          reduce using rule 6 (bigstart_set)
+    UNITS          [reduce using rule 47 (trash)]
+    START          reduce using rule 6 (bigstart_set)
+    START          [reduce using rule 47 (trash)]
+    END            reduce using rule 6 (bigstart_set)
+    END            [reduce using rule 47 (trash)]
+    COURSE_NUMBER  reduce using rule 6 (bigstart_set)
+    COURSE_NUMBER  [reduce using rule 47 (trash)]
+    EQUALS         reduce using rule 6 (bigstart_set)
+    EQUALS         [reduce using rule 47 (trash)]
+    DASH           reduce using rule 6 (bigstart_set)
+    DASH           [reduce using rule 47 (trash)]
+    SEMICOLON      reduce using rule 6 (bigstart_set)
+    SEMICOLON      [reduce using rule 47 (trash)]
+    PERIOD         reduce using rule 6 (bigstart_set)
+    PERIOD         [reduce using rule 47 (trash)]
+    BREAK          reduce using rule 6 (bigstart_set)
+    BREAK          [reduce using rule 47 (trash)]
+    BIG_START      reduce using rule 6 (bigstart_set)
+    BIG_START      [reduce using rule 47 (trash)]
+    BIG_END        reduce using rule 6 (bigstart_set)
+    BIG_END        [reduce using rule 47 (trash)]
+    AND            reduce using rule 6 (bigstart_set)
+    AND            [reduce using rule 47 (trash)]
+    OR             reduce using rule 6 (bigstart_set)
+    OR             [reduce using rule 47 (trash)]
+    WORD           reduce using rule 6 (bigstart_set)
+    WORD           [reduce using rule 47 (trash)]
+    AUTUMN         reduce using rule 6 (bigstart_set)
+    AUTUMN         [reduce using rule 47 (trash)]
+    WINTER         reduce using rule 6 (bigstart_set)
+    WINTER         [reduce using rule 47 (trash)]
+    SUMMER         reduce using rule 6 (bigstart_set)
+    SUMMER         [reduce using rule 47 (trash)]
+    SPRING         reduce using rule 6 (bigstart_set)
+    SPRING         [reduce using rule 47 (trash)]
+    $default       reduce using rule 6 (bigstart_set)
+
+
+State 73
+
+   24 prereq_courses: course conjphrasem trashm . BREAK
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 9
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 13
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 78
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    trash  go to state 29
+
+
+State 74
+
+   28 conjphrasem: conjphrase conjphrasem .
+
+    $default  reduce using rule 28 (conjphrasem)
+
+
+State 75
+
+   29 conjphrase: conjunction . trashm course
+
+    $default  reduce using rule 32 (trashm)
+
+    trashm  go to state 79
+
+
+State 76
+
+   25 prereq_courses: course conjunction trashm . BREAK
+   29 conjphrase: conjunction trashm . course
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 80
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 81
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 82
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    course  go to state 83
+    trash   go to state 29
+
+
+State 77
+
+   26 prereq_courses: course trashm BREAK .
+   45 trash: BREAK .
+
+    PREREQ         reduce using rule 26 (prereq_courses)
+    PREREQ         [reduce using rule 45 (trash)]
+    TERMS          reduce using rule 26 (prereq_courses)
+    TERMS          [reduce using rule 45 (trash)]
+    COURSE_LABEL   reduce using rule 26 (prereq_courses)
+    COURSE_LABEL   [reduce using rule 45 (trash)]
+    UNITS          reduce using rule 26 (prereq_courses)
+    UNITS          [reduce using rule 45 (trash)]
+    START          reduce using rule 26 (prereq_courses)
+    START          [reduce using rule 45 (trash)]
+    END            reduce using rule 26 (prereq_courses)
+    END            [reduce using rule 45 (trash)]
+    COURSE_NUMBER  reduce using rule 26 (prereq_courses)
+    COURSE_NUMBER  [reduce using rule 45 (trash)]
+    EQUALS         reduce using rule 26 (prereq_courses)
+    EQUALS         [reduce using rule 45 (trash)]
+    DASH           reduce using rule 26 (prereq_courses)
+    DASH           [reduce using rule 45 (trash)]
+    SEMICOLON      reduce using rule 26 (prereq_courses)
+    SEMICOLON      [reduce using rule 45 (trash)]
+    PERIOD         reduce using rule 26 (prereq_courses)
+    PERIOD         [reduce using rule 45 (trash)]
+    BREAK          reduce using rule 26 (prereq_courses)
+    BREAK          [reduce using rule 45 (trash)]
+    BIG_START      reduce using rule 26 (prereq_courses)
+    BIG_START      [reduce using rule 45 (trash)]
+    BIG_END        reduce using rule 26 (prereq_courses)
+    BIG_END        [reduce using rule 45 (trash)]
+    AND            reduce using rule 26 (prereq_courses)
+    AND            [reduce using rule 45 (trash)]
+    OR             reduce using rule 26 (prereq_courses)
+    OR             [reduce using rule 45 (trash)]
+    WORD           reduce using rule 26 (prereq_courses)
+    WORD           [reduce using rule 45 (trash)]
+    AUTUMN         reduce using rule 26 (prereq_courses)
+    AUTUMN         [reduce using rule 45 (trash)]
+    WINTER         reduce using rule 26 (prereq_courses)
+    WINTER         [reduce using rule 45 (trash)]
+    SUMMER         reduce using rule 26 (prereq_courses)
+    SUMMER         [reduce using rule 45 (trash)]
+    SPRING         reduce using rule 26 (prereq_courses)
+    SPRING         [reduce using rule 45 (trash)]
+    $default       reduce using rule 26 (prereq_courses)
+
+
+State 78
+
+   24 prereq_courses: course conjphrasem trashm BREAK .
+   45 trash: BREAK .
+
+    PREREQ         reduce using rule 24 (prereq_courses)
+    PREREQ         [reduce using rule 45 (trash)]
+    TERMS          reduce using rule 24 (prereq_courses)
+    TERMS          [reduce using rule 45 (trash)]
+    COURSE_LABEL   reduce using rule 24 (prereq_courses)
+    COURSE_LABEL   [reduce using rule 45 (trash)]
+    UNITS          reduce using rule 24 (prereq_courses)
+    UNITS          [reduce using rule 45 (trash)]
+    START          reduce using rule 24 (prereq_courses)
+    START          [reduce using rule 45 (trash)]
+    END            reduce using rule 24 (prereq_courses)
+    END            [reduce using rule 45 (trash)]
+    COURSE_NUMBER  reduce using rule 24 (prereq_courses)
+    COURSE_NUMBER  [reduce using rule 45 (trash)]
+    EQUALS         reduce using rule 24 (prereq_courses)
+    EQUALS         [reduce using rule 45 (trash)]
+    DASH           reduce using rule 24 (prereq_courses)
+    DASH           [reduce using rule 45 (trash)]
+    SEMICOLON      reduce using rule 24 (prereq_courses)
+    SEMICOLON      [reduce using rule 45 (trash)]
+    PERIOD         reduce using rule 24 (prereq_courses)
+    PERIOD         [reduce using rule 45 (trash)]
+    BREAK          reduce using rule 24 (prereq_courses)
+    BREAK          [reduce using rule 45 (trash)]
+    BIG_START      reduce using rule 24 (prereq_courses)
+    BIG_START      [reduce using rule 45 (trash)]
+    BIG_END        reduce using rule 24 (prereq_courses)
+    BIG_END        [reduce using rule 45 (trash)]
+    AND            reduce using rule 24 (prereq_courses)
+    AND            [reduce using rule 45 (trash)]
+    OR             reduce using rule 24 (prereq_courses)
+    OR             [reduce using rule 45 (trash)]
+    WORD           reduce using rule 24 (prereq_courses)
+    WORD           [reduce using rule 45 (trash)]
+    AUTUMN         reduce using rule 24 (prereq_courses)
+    AUTUMN         [reduce using rule 45 (trash)]
+    WINTER         reduce using rule 24 (prereq_courses)
+    WINTER         [reduce using rule 45 (trash)]
+    SUMMER         reduce using rule 24 (prereq_courses)
+    SUMMER         [reduce using rule 45 (trash)]
+    SPRING         reduce using rule 24 (prereq_courses)
+    SPRING         [reduce using rule 45 (trash)]
+    $default       reduce using rule 24 (prereq_courses)
+
+
+State 79
+
+   29 conjphrase: conjunction trashm . course
+   33 trashm: trashm . trash
+
+    PREREQ         shift, and go to state 7
+    TERMS          shift, and go to state 8
+    COURSE_LABEL   shift, and go to state 80
+    UNITS          shift, and go to state 10
+    START          shift, and go to state 11
+    END            shift, and go to state 12
+    COURSE_NUMBER  shift, and go to state 81
+    EQUALS         shift, and go to state 14
+    DASH           shift, and go to state 15
+    SEMICOLON      shift, and go to state 16
+    PERIOD         shift, and go to state 17
+    BREAK          shift, and go to state 18
+    BIG_START      shift, and go to state 32
+    BIG_END        shift, and go to state 20
+    AND            shift, and go to state 21
+    OR             shift, and go to state 22
+    WORD           shift, and go to state 23
+    AUTUMN         shift, and go to state 24
+    WINTER         shift, and go to state 25
+    SUMMER         shift, and go to state 26
+    SPRING         shift, and go to state 27
+
+    course  go to state 83
+    trash   go to state 29
+
+
+State 80
+
+   22 course: COURSE_LABEL . COURSE_NUMBER
+   23       | COURSE_LABEL . SEMICOLON COURSE_NUMBER
+   36 trash: COURSE_LABEL .
+
+    COURSE_NUMBER  shift, and go to state 39
+    SEMICOLON      shift, and go to state 40
+
+    COURSE_NUMBER  [reduce using rule 36 (trash)]
+    SEMICOLON      [reduce using rule 36 (trash)]
+    $default       reduce using rule 36 (trash)
+
+
+State 81
+
+   21 course: COURSE_NUMBER .
+   37 trash: COURSE_NUMBER .
+
+    PREREQ         reduce using rule 21 (course)
+    PREREQ         [reduce using rule 37 (trash)]
+    TERMS          reduce using rule 21 (course)
+    TERMS          [reduce using rule 37 (trash)]
+    COURSE_LABEL   reduce using rule 21 (course)
+    COURSE_LABEL   [reduce using rule 37 (trash)]
+    UNITS          reduce using rule 21 (course)
+    UNITS          [reduce using rule 37 (trash)]
+    START          reduce using rule 21 (course)
+    START          [reduce using rule 37 (trash)]
+    END            reduce using rule 21 (course)
+    END            [reduce using rule 37 (trash)]
+    COURSE_NUMBER  reduce using rule 21 (course)
+    COURSE_NUMBER  [reduce using rule 37 (trash)]
+    EQUALS         reduce using rule 21 (course)
+    EQUALS         [reduce using rule 37 (trash)]
+    DASH           reduce using rule 21 (course)
+    DASH           [reduce using rule 37 (trash)]
+    SEMICOLON      reduce using rule 21 (course)
+    SEMICOLON      [reduce using rule 37 (trash)]
+    PERIOD         reduce using rule 21 (course)
+    PERIOD         [reduce using rule 37 (trash)]
+    BREAK          reduce using rule 21 (course)
+    BREAK          [reduce using rule 37 (trash)]
+    BIG_START      reduce using rule 21 (course)
+    BIG_START      [reduce using rule 37 (trash)]
+    BIG_END        reduce using rule 21 (course)
+    BIG_END        [reduce using rule 37 (trash)]
+    AND            reduce using rule 21 (course)
+    AND            [reduce using rule 37 (trash)]
+    OR             reduce using rule 21 (course)
+    OR             [reduce using rule 37 (trash)]
+    WORD           reduce using rule 21 (course)
+    WORD           [reduce using rule 37 (trash)]
+    AUTUMN         reduce using rule 21 (course)
+    AUTUMN         [reduce using rule 37 (trash)]
+    WINTER         reduce using rule 21 (course)
+    WINTER         [reduce using rule 37 (trash)]
+    SUMMER         reduce using rule 21 (course)
+    SUMMER         [reduce using rule 37 (trash)]
+    SPRING         reduce using rule 21 (course)
+    SPRING         [reduce using rule 37 (trash)]
+    $default       reduce using rule 21 (course)
+
+
+State 82
+
+   25 prereq_courses: course conjunction trashm BREAK .
+   45 trash: BREAK .
+
+    PREREQ         reduce using rule 25 (prereq_courses)
+    PREREQ         [reduce using rule 45 (trash)]
+    TERMS          reduce using rule 25 (prereq_courses)
+    TERMS          [reduce using rule 45 (trash)]
+    COURSE_LABEL   reduce using rule 25 (prereq_courses)
+    COURSE_LABEL   [reduce using rule 45 (trash)]
+    UNITS          reduce using rule 25 (prereq_courses)
+    UNITS          [reduce using rule 45 (trash)]
+    START          reduce using rule 25 (prereq_courses)
+    START          [reduce using rule 45 (trash)]
+    END            reduce using rule 25 (prereq_courses)
+    END            [reduce using rule 45 (trash)]
+    COURSE_NUMBER  reduce using rule 25 (prereq_courses)
+    COURSE_NUMBER  [reduce using rule 45 (trash)]
+    EQUALS         reduce using rule 25 (prereq_courses)
+    EQUALS         [reduce using rule 45 (trash)]
+    DASH           reduce using rule 25 (prereq_courses)
+    DASH           [reduce using rule 45 (trash)]
+    SEMICOLON      reduce using rule 25 (prereq_courses)
+    SEMICOLON      [reduce using rule 45 (trash)]
+    PERIOD         reduce using rule 25 (prereq_courses)
+    PERIOD         [reduce using rule 45 (trash)]
+    BREAK          reduce using rule 25 (prereq_courses)
+    BREAK          [reduce using rule 45 (trash)]
+    BIG_START      reduce using rule 25 (prereq_courses)
+    BIG_START      [reduce using rule 45 (trash)]
+    BIG_END        reduce using rule 25 (prereq_courses)
+    BIG_END        [reduce using rule 45 (trash)]
+    AND            reduce using rule 25 (prereq_courses)
+    AND            [reduce using rule 45 (trash)]
+    OR             reduce using rule 25 (prereq_courses)
+    OR             [reduce using rule 45 (trash)]
+    WORD           reduce using rule 25 (prereq_courses)
+    WORD           [reduce using rule 45 (trash)]
+    AUTUMN         reduce using rule 25 (prereq_courses)
+    AUTUMN         [reduce using rule 45 (trash)]
+    WINTER         reduce using rule 25 (prereq_courses)
+    WINTER         [reduce using rule 45 (trash)]
+    SUMMER         reduce using rule 25 (prereq_courses)
+    SUMMER         [reduce using rule 45 (trash)]
+    SPRING         reduce using rule 25 (prereq_courses)
+    SPRING         [reduce using rule 45 (trash)]
+    $default       reduce using rule 25 (prereq_courses)
+
+
+State 83
+
+   29 conjphrase: conjunction trashm course .
+
+    $default  reduce using rule 29 (conjphrase)
